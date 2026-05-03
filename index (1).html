@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dominic Gutierrez — Computer Engineering Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --surface2: #f0efeb;
+      --border: rgba(0,0,0,0.10);
+      --border2: rgba(0,0,0,0.20);
+      --text: #1a1a18;
+      --muted: #5c5c58;
+      --hint: #9a9a94;
+      --accent: #185FA5;
+      --accent-light: #E6F1FB;
+      --accent-mid: #378ADD;
+      --accent-border: #B5D4F4;
+      --heading-font: 'DM Serif Display', Georgia, serif;
+      --body-font: 'DM Sans', sans-serif;
+      --mono: 'DM Mono', monospace;
+      --radius: 8px;
+      --radius-lg: 12px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1a1a18;
+        --surface: #242422;
+        --surface2: #2e2e2b;
+        --border: rgba(255,255,255,0.10);
+        --border2: rgba(255,255,255,0.20);
+        --text: #f0efeb;
+        --muted: #a8a8a2;
+        --hint: #6a6a65;
+        --accent: #378ADD;
+        --accent-light: #0c2a42;
+        --accent-mid: #378ADD;
+        --accent-border: #185FA5;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--body-font);
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 58px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--heading-font);
+      font-size: 20px;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); font-style: italic; }
+    .nav-links { display: flex; gap: 4px; flex-wrap: wrap; }
+    .nav-btn {
+      background: none;
+      border: none;
+      padding: 7px 12px;
+      font-size: 14px;
+      font-family: var(--body-font);
+      color: var(--muted);
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-btn:hover { background: var(--surface2); color: var(--text); }
+    .nav-btn.active { background: var(--accent-light); color: var(--accent); font-weight: 500; }
+
+    /* ===== PAGES ===== */
+    .page { display: none; }
+    .page.active { display: block; animation: fadeIn 0.2s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 4rem 2.5rem 3rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 2.5rem;
+      align-items: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .hero-text h1 {
+      font-family: var(--heading-font);
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+    .hero-text h1 em { color: var(--accent); font-style: italic; }
+    .hero-text p { color: var(--muted); font-size: 16px; max-width: 480px; }
+    .hero-photo {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #B5D4F4 0%, #378ADD 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--heading-font);
+      font-size: 42px;
+      color: #0C447C;
+      flex-shrink: 0;
+      border: 4px solid var(--surface);
+      box-shadow: 0 0 0 1px var(--border);
+      overflow: hidden;
+    }
+    .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+    .hero-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 1.25rem; }
+    .chip {
+      font-size: 12px;
+      font-family: var(--mono);
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--accent-light);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+
+    /* ===== PAGE CONTENT ===== */
+    .page-content {
+      padding: 2.5rem 2.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    .page-header {
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h2 {
+      font-family: var(--heading-font);
+      font-size: 32px;
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.25rem;
+    }
+    .page-header .sub { color: var(--muted); font-size: 15px; }
+
+    /* ===== SECTION ===== */
+    .section { margin-bottom: 2.5rem; }
+    .section h3 {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 0.9rem;
+    }
+    .section p { color: var(--muted); margin-bottom: 0.6rem; }
+    .section p strong { color: var(--text); font-weight: 500; }
+
+    /* ===== CARD ===== */
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .info-card h4 {
+      font-family: var(--heading-font);
+      font-size: 20px;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+    .card-tag {
+      font-size: 11px;
+      font-family: var(--mono);
+      color: var(--accent);
+      background: var(--accent-light);
+      padding: 3px 10px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 0.85rem;
+      border: 1px solid var(--accent-border);
+    }
+    .info-card p { font-size: 15px; color: var(--muted); }
+    .stat-row {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .stat-val { font-family: var(--mono); font-size: 15px; font-weight: 500; color: var(--text); }
+    .stat-lbl { font-size: 11px; color: var(--hint); margin-top: 2px; }
+
+    /* ===== COURSE GRID ===== */
+    .course-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 0.75rem;
+    }
+    .course-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text);
+    }
+    .course-code {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    /* ===== IMAGE PLACEHOLDER ===== */
+    .img-placeholder {
+      width: 100%;
+      height: 180px;
+      background: var(--accent-light);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      color: var(--accent);
+      font-family: var(--mono);
+      border: 1px dashed var(--accent-border);
+      margin-bottom: 2rem;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .img-placeholder .img-hint { font-size: 11px; color: var(--hint); }
+
+    /* ===== TECH BLOCKS ===== */
+    .tech-block {
+      background: var(--surface);
+      border-left: 3px solid var(--accent-mid);
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .tech-block h4 { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 0.4rem; }
+    .tech-block p { font-size: 15px; color: var(--muted); }
+
+    /* ===== WORKS CITED ===== */
+    .cite-item {
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 0;
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+    }
+    .cite-num {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+      min-width: 22px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .cite-text { line-height: 1.6; }
+    .cite-text a { color: var(--accent); text-decoration: none; }
+    .cite-text a:hover { text-decoration: underline; }
+
+    /* ===== HOME QUICK-NAV GRID ===== */
+    .quick-nav {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin-top: 1rem;
+    }
+    .quick-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem;
+      cursor: pointer;
+      transition: border-color 0.15s, transform 0.1s;
+      text-align: left;
+    }
+    .quick-card:hover { border-color: var(--accent-mid); transform: translateY(-2px); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 640px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-photo { width: 80px; height: 80px; font-size: 28px; }
+      .hero-text h1 { font-size: 28px; }
+      .nav { padding: 8px 1rem; height: auto; flex-wrap: wrap; gap: 4px; }
+      .nav-btn { font-size: 12px; padding: 5px 8px; }
+      .page-content { padding: 1.5rem 1rem; }
+      .hero { padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a class="nav-logo" href="#" onclick="showPage('home');return false;">Dominic <span>Gutierrez</span></a>
+    <div class="nav-links">
+      <button class="nav-btn active" id="btn-home" onclick="showPage('home')">Home</button>
+      <button class="nav-btn" id="btn-hcc" onclick="showPage('hcc')">Academics — HCC</button>
+      <button class="nav-btn" id="btn-beyond" onclick="showPage('beyond')">Beyond HCC</button>
+      <button class="nav-btn" id="btn-career" onclick="showPage('career')">Future Career</button>
+      <button class="nav-btn" id="btn-tech" onclick="showPage('tech')">Emerging Tech</button>
+      <button class="nav-btn" id="btn-cite" onclick="showPage('cite')">Works Cited</button>
+    </div>
+  </nav>
+
+  <!-- ======================== PAGE 1: HOME ======================== -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-text">
+        <h1>Building the technology<br>of <em>tomorrow.</em></h1>
+        <p>Welcome to my academic and career portfolio. I'm a Computer Engineering student at Hillsborough Community College, working toward designing the hardware and software systems that power our world.</p>
+        <div class="hero-chips">
+          <span class="chip">Computer Engineering</span>
+          <span class="chip">HCC — A.A. Transfer</span>
+        </div>
+      </div>
+      <div class="hero-photo"><img src="self.jpg" alt="Your Name" /></div>
+    </div>
+
+    <div class="page-content">
+      <div class="section">
+        <h3>About this site</h3>
+        <p>This website walks through my academic path — from courses at HCC to the universities I plan to transfer to, the careers I'm preparing for, and an emerging technology I'm excited about. Use the navigation above to explore each section.</p>
+      </div>
+      <div class="section">
+        <h3>Explore</h3>
+        <div class="quick-nav">
+          <div class="quick-card" onclick="showPage('hcc')">
+            <div class="card-tag">page 2</div>
+            <h4 style="font-family:var(--heading-font);font-size:17px;font-weight:400;margin-bottom:6px;">Academics at HCC</h4>
+            <p style="font-size:13px;color:var(--muted);">My major, degree, and coursework at Hillsborough Community College.</p>
+          </div>
+          <div class="quick-card" onclick="showPage('beyond')">
+            <div class="card-tag">page 3</div>
+            <h4 style="font-family:var(--heading-font);font-size:17px;font-weight:400;margin-bottom:6px;">Beyond HCC</h4>
+            <p style="font-size:13px;color:var(--muted);">Three Florida universities with B.S. Computer Engineering programs.</p>
+          </div>
+          <div class="quick-card" onclick="showPage('career')">
+            <div class="card-tag">page 4</div>
+            <h4 style="font-family:var(--heading-font);font-size:17px;font-weight:400;margin-bottom:6px;">Future Career</h4>
+            <p style="font-size:13px;color:var(--muted);">Three career paths — roles, duties, and salary data.</p>
+          </div>
+          <div class="quick-card" onclick="showPage('tech')">
+            <div class="card-tag">page 5</div>
+            <h4 style="font-family:var(--heading-font);font-size:17px;font-weight:400;margin-bottom:6px;">Emerging Tech</h4>
+            <p style="font-size:13px;color:var(--muted);">Neuromorphic computing — brain-inspired chips reshaping AI.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE 2: HCC ======================== -->
+  <div class="page" id="page-hcc">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Academics at HCC</h2>
+        <div class="sub">Hillsborough Community College — Tampa, FL</div>
+      </div>
+
+      <img src="hcc.jpg" alt="HCC Campus" style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:2rem;" />
+
+      <div class="section">
+        <h3>My major</h3>
+        <p><strong>Computer Engineering</strong> is the discipline that bridges hardware design and software development — building everything from processors and circuit boards to the firmware and systems software that runs on them. Computer engineers work at the intersection of electrical engineering and computer science, designing the physical and logical systems that make modern technology possible.</p>
+      </div>
+
+      <div class="section">
+        <h3>Degree / certificate</h3>
+        <div class="info-card">
+          <div class="card-tag">transfer degree</div>
+          <h4>Associate in Arts (A.A.) — Computer Information Systems Pre-Major</h4>
+          <p>HCC's A.A. in Computer Information Systems is a pre-major transfer pathway designed for students planning to pursue a four-year degree in computer and information sciences. After completing this degree, I will transfer into a Bachelor of Science in Computer Engineering program at a Florida state university. The program combines general education requirements with core math, science, and computing courses that align with upper-division engineering prerequisites.</p>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Courses I will take as part of this program</h3>
+        <div class="course-list">
+          <div class="course-item"><span class="course-code">MAC 1105</span>College Algebra</div>
+          <div class="course-item"><span class="course-code">MAC 2311</span>Calculus I</div>
+          <div class="course-item"><span class="course-code">MAC 2312</span>Calculus II</div>
+          <div class="course-item"><span class="course-code">COP 1000</span>Intro to Programming</div>
+          <div class="course-item"><span class="course-code">COP 2000</span>Programming Fundamentals</div>
+          <div class="course-item"><span class="course-code">PHY 2048</span>Physics for Engineers I</div>
+          <div class="course-item"><span class="course-code">ENC 1101</span>English Composition I</div>
+          <div class="course-item"><span class="course-code">ENC 1102</span>English Composition II</div>
+          <div class="course-item"><span class="course-code">CGS 1100</span>Intro to Computer Technology</div>
+          <div class="course-item"><span class="course-code">MAD 2104</span>Discrete Mathematics</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE 3: BEYOND HCC ======================== -->
+  <div class="page" id="page-beyond">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Academics Beyond HCC</h2>
+        <div class="sub">Three B.S. Computer Engineering programs for after I transfer</div>
+      </div>
+      <img src="ucf.jpg" alt="University Campus" style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:2rem;" />
+
+      <div class="info-card">
+        <div class="card-tag">option 1 — Tampa, FL</div>
+        <h4>University of South Florida — B.S. in Computer Engineering</h4>
+        <p>USF's Computer Engineering program focuses on designing both the hardware and software that make modern technology possible. Students learn how computer systems are built from the ground up, with coursework covering digital logic, embedded systems, computer architecture, and software design. Because USF is located right in Tampa, it is one of the most convenient and practical transfer destinations from HCC. USF is also a top-tier public research university in Florida, offering strong internship and industry connections in the Tampa Bay tech sector.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-val">120</div><div class="stat-lbl">credit hours</div></div>
+          <div class="stat"><div class="stat-val">Tampa, FL</div><div class="stat-lbl">location</div></div>
+          <div class="stat"><div class="stat-val">Public R1</div><div class="stat-lbl">institution type</div></div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-tag">option 2 — Orlando, FL</div>
+        <h4>University of Central Florida — B.S. in Computer Engineering (BSCpE)</h4>
+        <p>UCF's Computer Engineering program integrates hardware and software engineering to help students design and build efficient real-world systems. The program is housed in UCF's College of Engineering and Computer Science — one of the largest engineering colleges in the country — located in Orlando, one of Florida's fastest-growing tech cities. UCF offers extensive research labs, capstone design projects, and strong ties to aerospace, defense, and simulation industries in Central Florida.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-val">120</div><div class="stat-lbl">credit hours</div></div>
+          <div class="stat"><div class="stat-val">Orlando, FL</div><div class="stat-lbl">location</div></div>
+          <div class="stat"><div class="stat-val">Top 10</div><div class="stat-lbl">largest U.S. university</div></div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-tag">option 3 — Miami, FL</div>
+        <h4>Florida International University — B.S. in Computer Engineering</h4>
+        <p>FIU's Computer Engineering program trains students in hardware architecture, software engineering, hardware-software integration, signal and image processing, and computer networking. FIU holds a distinguished designation as a National Center of Academic Excellence in Information Assurance Education from the NSA and Department of Homeland Security. Graduates have gone on to work at leading companies including Boeing and Intel. The program is also available fully online, offering additional flexibility for working students.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-val">NSA / DHS</div><div class="stat-lbl">recognized center</div></div>
+          <div class="stat"><div class="stat-val">Miami, FL</div><div class="stat-lbl">location</div></div>
+          <div class="stat"><div class="stat-val">Online avail.</div><div class="stat-lbl">flexible option</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE 4: FUTURE CAREER ======================== -->
+  <div class="page" id="page-career">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Future Career</h2>
+        <div class="sub">Three roles a Computer Engineering degree prepares you for</div>
+      </div>
+        <img src="engineer.jpg" alt="Engineer at work" style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:2rem;" 
+      <img src="engineer.jpg" alt="Engineer at work" style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:2rem;" />
+
+      <div class="info-card">
+        <div class="card-tag">career 1</div>
+        <h4>Computer Hardware Engineer</h4>
+        <p>Hardware engineers research, design, develop, and test computer components — including processors, circuit boards, memory devices, and routers. Today, many hardware engineers also design the computing systems embedded in cars, home appliances, and medical devices that connect to the internet. Because hardware engineers work closely with software development teams, a strong background in programming is typically expected alongside hardware design skills. Most positions require a bachelor's degree in computer engineering or electrical engineering.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-val">$155,020</div><div class="stat-lbl">median annual salary (BLS, May 2024)</div></div>
+          <div class="stat"><div class="stat-val">+7%</div><div class="stat-lbl">projected job growth 2024–2034</div></div>
+          <div class="stat"><div class="stat-val">R&amp;D / Mfg.</div><div class="stat-lbl">top industries</div></div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-tag">career 2</div>
+        <h4>Software Developer / Systems Engineer</h4>
+        <p>Software developers and systems engineers design and build the software that computers, phones, and other devices run on. Systems software developers in particular create the operating systems and low-level software that keep devices functioning — including those in smartphones, cars, and industrial equipment. Developers with a computer engineering background are especially valuable because they understand how software interacts with hardware, making them effective at building high-performance, reliable systems. This role often leads to technical leadership and project management positions over time.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-val">$130,160</div><div class="stat-lbl">median annual salary</div></div>
+          <div class="stat"><div class="stat-val">+17%</div><div class="stat-lbl">projected job growth 2023–2033</div></div>
+          <div class="stat"><div class="stat-val">Tech / Gov</div><div class="stat-lbl">top industries</div></div>
+        </div>
+      </div>
+
+      <div class="info-card">
+        <div class="card-tag">career 3</div>
+        <h4>Embedded Systems Engineer</h4>
+        <p>Embedded engineers write the software that runs directly inside dedicated hardware devices — everything from automotive braking systems and smartwatches to industrial robots and medical monitors. Unlike general application developers, embedded engineers must understand the hardware deeply, programming in low-level languages like C and C++ with strict memory, power, and real-time constraints. This is one of the most natural career fits for a Computer Engineering graduate because it demands fluency in both hardware design and software development simultaneously.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-val">$132,267</div><div class="stat-lbl">median annual salary</div></div>
+          <div class="stat"><div class="stat-val">Auto / Medical</div><div class="stat-lbl">top industries</div></div>
+          <div class="stat"><div class="stat-val">C / C++</div><div class="stat-lbl">primary languages</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE 5: EMERGING TECH ======================== -->
+  <div class="page" id="page-tech">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Emerging Technology</h2>
+        <div class="sub">Neuromorphic Computing — brain-inspired chips for the AI era</div>
+      </div>
+      <img src="circuit.jpg" alt="Engineer at work" style="width:100%;height:220px;object-fit:cover;border-radius:12px;margin-bottom:2rem;" />
+
+      <div class="tech-block">
+        <h4>What is neuromorphic computing?</h4>
+        <p>Neuromorphic computing is a technology that designs computer chips to work more like the human brain — using artificial neurons and synapses instead of traditional transistors and clock cycles. Rather than processing every instruction in a rigid sequence, neuromorphic chips process information in parallel, event-driven bursts. This makes them far more efficient for perception and pattern-recognition tasks than conventional processors.</p>
+      </div>
+
+      <div class="tech-block">
+        <h4>How is it used today?</h4>
+        <p>Companies like Intel (Loihi 2) and BrainChip (Akida) have already released commercial neuromorphic chips. Autonomous vehicles use neuromorphic vision processors to recognize objects in real time with far less power than a GPU. The technology is also being applied in cybersecurity threat detection, healthcare patient monitoring, aerospace systems, and any edge-AI device where battery life and processing speed are critical constraints.</p>
+      </div>
+
+      <div class="tech-block">
+        <h4>Market size and growth</h4>
+        <p>The neuromorphic computing market reached an estimated $8–9.5 billion in 2025 and is projected to grow to between $47–59 billion by 2033. Over $200 million in venture capital was invested in neuromorphic startups in 2025 alone, with Intel, IBM, Samsung, and Qualcomm all actively staking positions in the field.</p>
+      </div>
+
+      <div class="tech-block">
+        <h4>How does this connect to Computer Engineering?</h4>
+        <p>Designing neuromorphic hardware requires exactly the skills a Computer Engineering degree develops: chip architecture, digital logic, hardware-software co-design, and low-level systems programming. As AI becomes embedded in physical devices — cars, wearables, robots, medical implants — engineers who can design efficient, brain-inspired hardware will be among the most valuable in the industry. Neuromorphic computing sits directly at the intersection of hardware and AI, which is precisely where I want to build my career.</p>
+      </div>
+
+      <div class="section">
+        <h3>Why this technology interests me</h3>
+        <p>Traditional processors are hitting fundamental limits — they require enormous amounts of power to perform the AI tasks that a human brain accomplishes using roughly 20 watts. Neuromorphic computing offers a path toward AI that is faster, more energy-efficient, and more adaptable to real-world environments. The idea of building hardware that takes its design cues from the most powerful computing system we know — the brain itself — is one of the most ambitious and exciting engineering challenges happening right now. I want to be part of it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================== PAGE 6: WORKS CITED ======================== -->
+  <div class="page" id="page-cite">
+    <div class="page-content">
+      <div class="page-header">
+        <h2>Works Cited</h2>
+        <div class="sub">References used throughout this website</div>
+      </div>
+
+      <div class="cite-item">
+        <div class="cite-num">1</div>
+        <div class="cite-text">Hillsborough Community College. (n.d.). <em>Computer Information Pathway (A.A. Transfer).</em> Retrieved from <a href="https://www.hccfl.edu/academics/subjects/information-technology/computer-information-pathway" target="_blank">https://www.hccfl.edu/academics/subjects/information-technology/computer-information-pathway</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">2</div>
+        <div class="cite-text">University of South Florida. (n.d.). <em>Bachelor of Science in Computer Engineering.</em> Retrieved from <a href="https://www.usf.edu/ai-cybersecurity-computing/academics/undergraduate/bscp.aspx" target="_blank">https://www.usf.edu/ai-cybersecurity-computing/academics/undergraduate/bscp.aspx</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">3</div>
+        <div class="cite-text">University of Central Florida. (n.d.). <em>Computer Engineering (BSCpE).</em> Retrieved from <a href="https://www.ucf.edu/degree/computer-engineering-bscpe/" target="_blank">https://www.ucf.edu/degree/computer-engineering-bscpe/</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">4</div>
+        <div class="cite-text">Florida International University. (n.d.). <em>Bachelor of Science in Computer Engineering — FIU Online.</em> Retrieved from <a href="https://fiuonline.fiu.edu/programs/online-undergraduate-degrees/bachelor-of-science-in-computer-engineering.php" target="_blank">https://fiuonline.fiu.edu/programs/online-undergraduate-degrees/bachelor-of-science-in-computer-engineering.php</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">5</div>
+        <div class="cite-text">U.S. Bureau of Labor Statistics. (2024). <em>Computer Hardware Engineers: Occupational Outlook Handbook.</em> Retrieved from <a href="https://www.bls.gov/ooh/architecture-and-engineering/computer-hardware-engineers.htm" target="_blank">https://www.bls.gov/ooh/architecture-and-engineering/computer-hardware-engineers.htm</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">6</div>
+        <div class="cite-text">U.S. Bureau of Labor Statistics. (2024). <em>Software Developers, Quality Assurance Analysts, and Testers: Occupational Outlook Handbook.</em> Retrieved from <a href="https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm" target="_blank">https://www.bls.gov/ooh/computer-and-information-technology/software-developers.htm</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">7</div>
+        <div class="cite-text">Franklin University. (2024). <em>How Much Do Embedded Software Engineers Make?</em> Retrieved from <a href="https://www.franklin.edu/career-guide/software-developers/how-much-salary-do-embedded-software-engineers-make" target="_blank">https://www.franklin.edu/career-guide/software-developers/how-much-salary-do-embedded-software-engineers-make</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">8</div>
+        <div class="cite-text">Sharma, A. (2026, February). <em>Neuromorphic Computing: How Brain-Inspired Chips Are Revolutionizing AI in 2025.</em> Medium / Accredian. Retrieved from <a href="https://medium.com/accredian/neuromorphic-computing-how-brain-inspired-chips-are-revolutionizing-ai-in-2025-62660ed8a911" target="_blank">https://medium.com/accredian/neuromorphic-computing-how-brain-inspired-chips-are-revolutionizing-ai-in-2025-62660ed8a911</a></div>
+      </div>
+      <div class="cite-item">
+        <div class="cite-num">9</div>
+        <div class="cite-text">UT Dallas News Center. (2025). <em>Team Builds Computer Prototype Designed to Make AI More Efficient.</em> Retrieved from <a href="https://news.utdallas.edu/science-technology/neuromorphic-computer-2025/" target="_blank">https://news.utdallas.edu/science-technology/neuromorphic-computer-2025/</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const pages = ['home','hcc','beyond','career','tech','cite'];
+
+    function showPage(key) {
+      pages.forEach(p => {
+        document.getElementById('page-' + p).classList.remove('active');
+        document.getElementById('btn-' + p).classList.remove('active');
+      });
+      document.getElementById('page-' + key).classList.add('active');
+      document.getElementById('btn-' + key).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+
+</body>
+</html>
